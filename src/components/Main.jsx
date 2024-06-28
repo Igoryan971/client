@@ -34,7 +34,7 @@ const Main = () => {
   };
   const rooms = ["1", "2", "3", "4", "5"];
 
-  const isOperator = "/admin";
+  const isOperator = `/admin?name=${values[NAME]}`;
   const isClient = `/chat?name=${values[NAME]}&room=${rooms[0]}&id=${values[ID]}`;
   const operatorCheck = isAdmin ? isOperator : isClient;
 

@@ -1,12 +1,8 @@
 import React from "react";
 
 import styles from "../styles/Room.module.css";
-import { Link } from "react-router-dom";
 
 const Room = ({ id, status }) => {
-  const goToChat = () => {
-    console.log('aaa')
-  };
 
   return (
     <div className={styles.room}>
