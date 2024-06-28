@@ -65,7 +65,6 @@ const AdminPage = () => {
           <div className={styles.name_container}>
             <div className={styles.name}>admin: Nika</div>
           </div>
-
           <div className={styles.chats}>Чаты с клиентами :</div>
           <div className={styles.room_container}>
             {arrRooms.map((item) => {

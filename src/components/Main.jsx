@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 import styles from "../styles/Main.module.css";
 
@@ -14,16 +15,28 @@ const Main = () => {
   const { NAME, ROOM, ID } = FIELDS;
 
   const [values, setValues] = useState({ [NAME]: "", [ROOM]: "", [ID]: "" });
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  const isAdminCheck = values[ID] === "operator";
+
+  useEffect(() => {
+    setIsAdmin(isAdminCheck);
+  }, [isAdminCheck]);
 
   const handleChange = ({ target: { value, name } }) => {
     setValues({ ...values, [name]: value });
   };
 
   const handleClick = (e) => {
-    const isDisabled = Object.values(values).some((v) => !v);
-
-    if (isDisabled) e.preventDefault();
+    if (!values[NAME] || !values[ID]) {
+      e.preventDefault();
+    }
   };
+  const rooms = ["1", "2", "3", "4", "5"];
+
+  const isOperator = "/admin";
+  const isClient = `/chat?name=${values[NAME]}&room=${rooms[0]}&id=${values[ID]}`;
+  const operatorCheck = isAdmin ? isOperator : isClient;
 
   return (
     <div className={styles.wrap}>
@@ -46,20 +59,8 @@ const Main = () => {
           <div className={styles.group}>
             <input
               type="text"
-              name="room"
-              placeholder="Комната"
-              value={values[ROOM]}
-              className={styles.input}
-              onChange={handleChange}
-              autoComplete="off"
-              required
-            />
-          </div>
-          <div className={styles.group}>
-            <input
-              type="text"
               name="id"
-              placeholder="Идентификатор"
+              placeholder="Роль"
               value={values[ID]}
               className={styles.input}
               onChange={handleChange}
@@ -71,7 +72,7 @@ const Main = () => {
           <Link
             className={styles.group}
             onClick={handleClick}
-            to={`/chat?name=${values[NAME]}&room=${values[ROOM]}&id=${values[ID]}`}>
+            to={operatorCheck}>
             <button type="submit" className={styles.button}>
               Присоедениться
             </button>
