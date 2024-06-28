@@ -1,23 +1,25 @@
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { host } from "../config";
 
 import styles from "../styles/Main.module.css";
 
 const FIELDS = {
   NAME: "name",
   ROOM: "room",
-  ID: "id",
+  ROLE: "role",
 };
 
 const Main = () => {
-  const { NAME, ROOM, ID } = FIELDS;
+  const { NAME, ROOM, ROLE } = FIELDS;
+  const navigate = useNavigate();
 
-  const [values, setValues] = useState({ [NAME]: "", [ROOM]: "", [ID]: "" });
+  const [values, setValues] = useState({ [NAME]: "", [ROOM]: "", [ROLE]: "" });
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const isAdminCheck = values[ID] === "operator";
+  const isAdminCheck = values[ROLE] === "operator";
 
   useEffect(() => {
     setIsAdmin(isAdminCheck);
@@ -27,16 +29,39 @@ const Main = () => {
     setValues({ ...values, [name]: value });
   };
 
-  const handleClick = (e) => {
-    if (!values[NAME] || !values[ID]) {
-      e.preventDefault();
+  //   const handleClick = (e) => {
+  //     if (!values[NAME] || !values[ROLE]) {
+  //       e.preventDefault();
+  //     }
+  //   };
+
+  const [linkToJoin, setlinkToJoin] = useState(null);
+
+  const handleJoinChat = async () => {
+    console.log("click");
+    try {
+      const response = await fetch(host + "list_for_client/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json(); // Parse the JSON-formatted response
+        console.log(data);
+        const urlOperator = "/admin";
+        const urlClient = `/chat?name=${values[NAME]}&room=${data[0]}&role=${values[ROLE]}`;
+        const link = isAdmin ? urlOperator : urlClient;
+        console.log(link);
+        navigate(link);
+      } else {
+        // Error handling for non-200 status
+      }
+    } catch (error) {
+      // Network error handling
     }
   };
-  const rooms = ["1", "2", "3", "4", "5"];
-
-  const isOperator = `/admin?name=${values[NAME]}`;
-  const isClient = `/chat?name=${values[NAME]}&room=${rooms[0]}&id=${values[ID]}`;
-  const operatorCheck = isAdmin ? isOperator : isClient;
 
   return (
     <div className={styles.wrap}>
@@ -59,24 +84,23 @@ const Main = () => {
           <div className={styles.group}>
             <input
               type="text"
-              name="id"
+              name="role"
               placeholder="Роль"
-              value={values[ID]}
+              value={values[ROLE]}
               className={styles.input}
               onChange={handleChange}
               autoComplete="off"
               required
             />
           </div>
-
-          <Link
-            className={styles.group}
-            onClick={handleClick}
-            to={operatorCheck}>
-            <button type="submit" className={styles.button}>
+          <div className={styles.group}>
+            <button
+              type="button"
+              className={styles.button}
+              onClick={handleJoinChat}>
               Присоедениться
             </button>
-          </Link>
+          </div>
         </form>
       </div>
     </div>
