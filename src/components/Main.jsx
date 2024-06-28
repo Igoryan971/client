@@ -50,7 +50,7 @@ const Main = () => {
       if (response.ok) {
         const data = await response.json(); // Parse the JSON-formatted response
         console.log(data);
-        const urlOperator = "/admin";
+        const urlOperator = `/admin?name=${values[NAME]}`;
         const urlClient = `/chat?name=${values[NAME]}&room=${data[0]}&role=${values[ROLE]}`;
         const link = isAdmin ? urlOperator : urlClient;
         console.log(link);
