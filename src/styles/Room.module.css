@@ -1,0 +1,39 @@
+
+  .room {
+    width: 80px;
+    height: 80px;
+    margin: 0 10px;
+    background-color: #ffff;
+    border-radius: 10px;
+  }
+
+  .room_container>* {
+    flex: 1 1 100px;
+  }
+
+  .roles {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .client {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: green;
+  }
+
+  .admin {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: blue;
+  }
+
+  .question_closed {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: rgb(225, 129, 51);
+  }
