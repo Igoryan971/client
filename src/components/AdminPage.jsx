@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import styles from "../styles/Admin.module.css";
 import Room from "./Room";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const arrRooms = [
   {
@@ -58,19 +58,31 @@ const arrRooms = [
 ];
 
 const AdminPage = () => {
+  const { search } = useLocation();
+  const [name1, setName1] = useState(null);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(search);
+    const name1 = searchParams.get("name");
+    setName1(name1);
+    console.log("Name parameter:", name1);
+  }, [search]);
+
   return (
     <div className={styles.wrap}>
       <div className={styles.container}>
         <div className={styles.admin_block}>
           <div className={styles.name_container}>
-            <div className={styles.name}>admin: Nika</div>
+            <div className={styles.name}>Оператор:    {name1}</div>
           </div>
           <div className={styles.chats}>Чаты с клиентами :</div>
           <div className={styles.room_container}>
             {arrRooms.map((item) => {
               return (
                 <Link
-                  to={`/chat?name=${item.name}&room=${item.id}&id=operator`}>
+                  key={item.id}
+                  to={`/chat?name=${item.id}&room=${item.id}&id=operator`}
+                >
                   <Room id={item.id} status={item.status} key={item.id} />
                 </Link>
               );
