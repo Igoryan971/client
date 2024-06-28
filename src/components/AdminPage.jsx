@@ -69,7 +69,8 @@ const AdminPage = () => {
           <div className={styles.room_container}>
             {arrRooms.map((item) => {
               return (
-                <Link to={`/chat?name=${item.id}&room=${item.id}&id=operator}`}>
+                <Link
+                  to={`/chat?name=${item.name}&room=${item.id}&id=operator`}>
                   <Room id={item.id} status={item.status} key={item.id} />
                 </Link>
               );

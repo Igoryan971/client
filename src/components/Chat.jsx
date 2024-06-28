@@ -9,8 +9,8 @@ import icon from "../images/emoji.svg";
 import styles from "../styles/Chat.module.css";
 import Messages from "./Messages";
 
-const socket = io.connect("http://localhost::5000");
-const testServer = "http://10.11.0.228:5000";
+const testServer = "http://10.10.0.237:5000";
+const socket = io.connect(testServer);
 
 const Chat = () => {
   const { search } = useLocation();

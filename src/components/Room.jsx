@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Room = ({ id, status }) => {
   const goToChat = () => {
-    console.log('aaa')
+    console.log("aaa");
   };
 
   return (
