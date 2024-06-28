@@ -9,7 +9,8 @@ import icon from "../images/emoji.svg";
 import styles from "../styles/Chat.module.css";
 import Messages from "./Messages";
 
-const socket = io.connect("https://online-chat-900l.onrender.com");
+const socket = io.connect("http://localhost::5000");
+const testServer = "http://10.11.0.228:5000";
 
 const Chat = () => {
   const { search } = useLocation();
@@ -19,13 +20,6 @@ const Chat = () => {
   const [message, setMessage] = useState("");
   const [isOpen, setOpen] = useState(false);
   const [users, setUsers] = useState(0);
-  const [isAdmin, setIsAdmin] = useState(false);
-
-  useEffect(() => {
-    if (params.id === "1") {
-      setIsAdmin(true);
-    }
-  }, [params.id]);
 
   useEffect(() => {
     const searchParams = Object.fromEntries(new URLSearchParams(search));
@@ -64,7 +58,7 @@ const Chat = () => {
 
   const onEmojiClick = ({ emoji }) => setMessage(`${message} ${emoji}`);
 
-  const className = isAdmin ? styles.messages : styles.admin;
+  // const className = isAdmin ? styles.messages : styles.admin;
 
   return (
     <div className={styles.wrap}>
@@ -76,7 +70,7 @@ const Chat = () => {
         </button>
       </div>
 
-      <div className={`${styles.messages} ${className}`}>
+      <div className={styles.messages}>
         <Messages messages={state} name={params.name} />
       </div>
 
