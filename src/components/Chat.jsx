@@ -63,7 +63,7 @@ const Chat = () => {
   return (
     <div className={styles.wrap}>
       <div className={styles.header}>
-        <div className={styles.title}>{params.room}</div>
+        <div className={styles.title}>Чат № {params.room}</div>
         <div className={styles.users}>{users} пользователей в чате</div>
         <button className={styles.left} onClick={leftRoom}>
           Покинуть чат
